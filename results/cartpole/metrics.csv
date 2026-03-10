@@ -1,0 +1,3 @@
+Model,Units,Parameters,Final_avg_reward,First_solved_ep,Avg_episode_time_s
+CFC,32,22370,24.0,N/A,0.0148
+LSTM,32,5986,16.0,N/A,0.0094
