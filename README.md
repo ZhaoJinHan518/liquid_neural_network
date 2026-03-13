@@ -137,7 +137,7 @@ lnn-project/
 | [docs/Final_Report_SITP.md](docs/Final_Report_SITP.md) | Chinese final report with results & conclusions |
 | [docs/literature_review.md](docs/literature_review.md) | Chinese literature review: LNN vs. traditional RNNs |
 | [docs/learning_notes.md](docs/learning_notes.md) | Chinese learning notes: project process and insights |
-| [docs/SITP_结题汇报.pptx](docs/SITP_结题汇报.pptx) | **结题汇报 PPT（18 slides）** — SITP conclusion presentation |
+| [docs/SITP_结题汇报.pptx](https://github.com/ZhaoJinHan518/liquid_neural_network/blob/copilot/create-presentation-slides/docs/SITP_%E7%BB%93%E9%A2%98%E6%B1%87%E6%8A%A5.pptx) | **结题汇报 PPT（18 slides）** — SITP conclusion presentation （[⬇ 直接下载](https://github.com/ZhaoJinHan518/liquid_neural_network/raw/copilot/create-presentation-slides/docs/SITP_%E7%BB%93%E9%A2%98%E6%B1%87%E6%8A%A5.pptx)） |
 | [docs/generate_ppt.py](docs/generate_ppt.py) | Script to regenerate the PPT (`python docs/generate_ppt.py`) |
 
 ### 🎞️ 生成 / 重新生成 PPT
@@ -152,18 +152,27 @@ python docs/generate_ppt.py
 
 ## 📤 如何导出 PPT 文件 (How to Export)
 
-`docs/SITP_结题汇报.pptx` 已提交至仓库，可通过以下任意方式获取：
+`docs/SITP_结题汇报.pptx` 已提交至本 PR 分支，可通过以下任意方式下载：
 
-### 方式一：GitHub 网页直接下载（无需 git）
+> **说明**：该文件当前位于 PR 分支 `copilot/create-presentation-slides`。  
+> 合并 PR 后，文件将出现在 `main` 分支，届时从主页也可直接看到。
 
-1. 打开仓库主页：<https://github.com/ZhaoJinHan518/liquid_neural_network>
-2. 进入 `docs/` 目录，点击 `SITP_结题汇报.pptx`
-3. 点击右上角 **"Download raw file"**（下载图标 ↓）即可保存到本地
+### 方式一：直接点击下载链接（最简单，立即可用）
 
-### 方式二：克隆仓库后本地使用
+👉 **[点击此处直接下载 SITP_结题汇报.pptx](https://github.com/ZhaoJinHan518/liquid_neural_network/raw/copilot/create-presentation-slides/docs/SITP_%E7%BB%93%E9%A2%98%E6%B1%87%E6%8A%A5.pptx)**
+
+或手动操作：
+1. 打开 PR 分支页面：<https://github.com/ZhaoJinHan518/liquid_neural_network/blob/copilot/create-presentation-slides/docs/SITP_%E7%BB%93%E9%A2%98%E6%B1%87%E6%8A%A5.pptx>
+2. 点击右上角 **"Download raw file"**（⬇ 图标）保存到本地
+
+> **注意**：如果在仓库 `main` 分支的 `docs/` 目录下看不到该文件，请先合并本 PR，  
+> 或直接使用上方链接从 PR 分支下载。
+
+### 方式二：克隆 PR 分支后本地使用
 
 ```bash
-git clone https://github.com/ZhaoJinHan518/liquid_neural_network.git
+git clone -b copilot/create-presentation-slides \
+    https://github.com/ZhaoJinHan518/liquid_neural_network.git
 cd liquid_neural_network
 # 文件位于：docs/SITP_结题汇报.pptx
 # 用 PowerPoint / WPS 演示 / LibreOffice Impress 打开即可

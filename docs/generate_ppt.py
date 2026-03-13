@@ -6,7 +6,7 @@ SITP 结题汇报 PPT 生成脚本
   python docs/generate_ppt.py                        # 生成 PPTX（默认路径）
   python docs/generate_ppt.py --out my_slides.pptx  # 自定义输出路径
   python docs/generate_ppt.py --pdf                  # 同时导出 PDF（需要 LibreOffice）
-  python docs/generate_ppt.py --pdf --out /tmp/sitp  # 自定义基础名，同时生成 .pptx 和 .pdf
+  python docs/generate_ppt.py --pdf --out /tmp/sitp.pptx  # 自定义输出路径，同时生成 .pptx 和 .pdf
 """
 
 import argparse
