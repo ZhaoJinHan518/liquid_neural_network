@@ -137,6 +137,16 @@ lnn-project/
 | [docs/Final_Report_SITP.md](docs/Final_Report_SITP.md) | Chinese final report with results & conclusions |
 | [docs/literature_review.md](docs/literature_review.md) | Chinese literature review: LNN vs. traditional RNNs |
 | [docs/learning_notes.md](docs/learning_notes.md) | Chinese learning notes: project process and insights |
+| [docs/SITP_结题汇报.pptx](docs/SITP_结题汇报.pptx) | **结题汇报 PPT（18 slides）** — SITP conclusion presentation |
+| [docs/generate_ppt.py](docs/generate_ppt.py) | Script to regenerate the PPT (`python docs/generate_ppt.py`) |
+
+### 🎞️ Regenerate the PPT
+
+```bash
+pip install python-pptx
+python docs/generate_ppt.py
+# Output: docs/SITP_结题汇报.pptx
+```
 
 ---
 
