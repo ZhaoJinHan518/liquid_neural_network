@@ -1,11 +1,18 @@
 """
 SITP 结题汇报 PPT 生成脚本
 项目：液态神经网络与普通神经网络的对比研究
-运行方式：python docs/generate_ppt.py
-输出：docs/SITP_结题汇报.pptx
+
+用法：
+  python docs/generate_ppt.py                        # 生成 PPTX（默认路径）
+  python docs/generate_ppt.py --out my_slides.pptx  # 自定义输出路径
+  python docs/generate_ppt.py --pdf                  # 同时导出 PDF（需要 LibreOffice）
+  python docs/generate_ppt.py --pdf --out /tmp/sitp  # 自定义基础名，同时生成 .pptx 和 .pdf
 """
 
+import argparse
 import os
+import subprocess
+import sys
 from pptx import Presentation
 from pptx.util import Inches, Pt
 from pptx.dml.color import RGBColor
@@ -940,10 +947,89 @@ def slide_18_thanks(prs):
 
 
 # ═══════════════════════════════════════════════════════════════════════════════
+#  PDF EXPORT
+# ═══════════════════════════════════════════════════════════════════════════════
+
+def _find_libreoffice():
+    """Return the LibreOffice executable path, or None if not found."""
+    for candidate in ("libreoffice", "soffice"):
+        try:
+            result = subprocess.run(
+                [candidate, "--version"],
+                capture_output=True, timeout=10
+            )
+            if result.returncode == 0:
+                return candidate
+        except (FileNotFoundError, subprocess.TimeoutExpired):
+            continue
+    return None
+
+
+def export_to_pdf(pptx_path: str) -> str:
+    """
+    Convert *pptx_path* to PDF using LibreOffice.
+
+    Returns the output PDF path on success.
+    Raises RuntimeError with installation instructions if LibreOffice is absent.
+    """
+    lo = _find_libreoffice()
+    if lo is None:
+        raise RuntimeError(
+            "LibreOffice 未找到，无法自动导出 PDF。\n\n"
+            "请选择以下任一方式安装 LibreOffice：\n"
+            "  Ubuntu/Debian : sudo apt install libreoffice\n"
+            "  macOS         : brew install --cask libreoffice\n"
+            "  Windows       : https://www.libreoffice.org/download/\n\n"
+            "安装后重新运行：python docs/generate_ppt.py --pdf\n\n"
+            "或者在 Microsoft PowerPoint / WPS 演示 中直接打开 .pptx 文件，\n"
+            "选择「文件 → 导出 → 导出为 PDF」即可。"
+        )
+
+    out_dir = os.path.dirname(os.path.abspath(pptx_path))
+    cmd = [lo, "--headless", "--convert-to", "pdf", "--outdir", out_dir, pptx_path]
+    print(f"  正在调用 LibreOffice 转换 PDF…  ({' '.join(cmd)})")
+    result = subprocess.run(cmd, capture_output=True, text=True, timeout=120)
+    if result.returncode != 0:
+        raise RuntimeError(
+            f"LibreOffice 转换失败（返回码 {result.returncode}）：\n"
+            f"{result.stderr.strip()}"
+        )
+    # LibreOffice names the output file after the input stem
+    pdf_path = os.path.splitext(pptx_path)[0] + ".pdf"
+    return pdf_path
+
+
+# ═══════════════════════════════════════════════════════════════════════════════
 #  MAIN
 # ═══════════════════════════════════════════════════════════════════════════════
 
+def _parse_args():
+    parser = argparse.ArgumentParser(
+        description="生成 SITP 结题汇报 PPT（可选同时导出 PDF）",
+        formatter_class=argparse.RawDescriptionHelpFormatter,
+        epilog=(
+            "示例：\n"
+            "  python docs/generate_ppt.py\n"
+            "  python docs/generate_ppt.py --out /tmp/my_slides.pptx\n"
+            "  python docs/generate_ppt.py --pdf\n"
+            "  python docs/generate_ppt.py --pdf --out /tmp/sitp_slides.pptx\n"
+        ),
+    )
+    default_out = os.path.join(os.path.dirname(os.path.abspath(__file__)), "SITP_结题汇报.pptx")
+    parser.add_argument(
+        "--out", metavar="OUTPUT.pptx", default=default_out,
+        help=f"PPTX 输出路径（默认：{default_out}）",
+    )
+    parser.add_argument(
+        "--pdf", action="store_true",
+        help="同时将 PPTX 转换为 PDF（需要安装 LibreOffice）",
+    )
+    return parser.parse_args()
+
+
 def main():
+    args = _parse_args()
+
     prs = Presentation()
     prs.slide_width  = SLIDE_W
     prs.slide_height = SLIDE_H
@@ -968,9 +1054,18 @@ def main():
     slide_17_refs(prs)           ; print(" [17/18] References")
     slide_18_thanks(prs)         ; print(" [18/18] Thank You")
 
-    out_path = os.path.join(os.path.dirname(__file__), "SITP_结题汇报.pptx")
+    out_path = os.path.abspath(args.out)
+    os.makedirs(os.path.dirname(out_path), exist_ok=True)
     prs.save(out_path)
-    print(f"\n✅ PPT saved to: {out_path}")
+    print(f"\n✅ PPTX 已保存：{out_path}")
+
+    if args.pdf:
+        try:
+            pdf_path = export_to_pdf(out_path)
+            print(f"✅ PDF  已保存：{pdf_path}")
+        except RuntimeError as exc:
+            print(f"\n⚠️  PDF 导出失败：\n{exc}", file=sys.stderr)
+            sys.exit(1)
 
 
 if __name__ == "__main__":

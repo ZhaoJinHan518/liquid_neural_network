@@ -140,13 +140,65 @@ lnn-project/
 | [docs/SITP_结题汇报.pptx](docs/SITP_结题汇报.pptx) | **结题汇报 PPT（18 slides）** — SITP conclusion presentation |
 | [docs/generate_ppt.py](docs/generate_ppt.py) | Script to regenerate the PPT (`python docs/generate_ppt.py`) |
 
-### 🎞️ Regenerate the PPT
+### 🎞️ 生成 / 重新生成 PPT
 
 ```bash
 pip install python-pptx
 python docs/generate_ppt.py
-# Output: docs/SITP_结题汇报.pptx
+# 输出：docs/SITP_结题汇报.pptx
 ```
+
+---
+
+## 📤 如何导出 PPT 文件 (How to Export)
+
+`docs/SITP_结题汇报.pptx` 已提交至仓库，可通过以下任意方式获取：
+
+### 方式一：GitHub 网页直接下载（无需 git）
+
+1. 打开仓库主页：<https://github.com/ZhaoJinHan518/liquid_neural_network>
+2. 进入 `docs/` 目录，点击 `SITP_结题汇报.pptx`
+3. 点击右上角 **"Download raw file"**（下载图标 ↓）即可保存到本地
+
+### 方式二：克隆仓库后本地使用
+
+```bash
+git clone https://github.com/ZhaoJinHan518/liquid_neural_network.git
+cd liquid_neural_network
+# 文件位于：docs/SITP_结题汇报.pptx
+# 用 PowerPoint / WPS 演示 / LibreOffice Impress 打开即可
+```
+
+### 方式三：自定义输出路径重新生成
+
+```bash
+pip install python-pptx
+
+# 默认路径 docs/SITP_结题汇报.pptx
+python docs/generate_ppt.py
+
+# 自定义输出路径
+python docs/generate_ppt.py --out /path/to/my_slides.pptx
+```
+
+### 方式四：同时导出 PDF（需要 LibreOffice）
+
+```bash
+# Ubuntu / Debian
+sudo apt install libreoffice
+
+# macOS
+brew install --cask libreoffice
+
+# 安装后运行（同时生成 .pptx 和 .pdf）
+python docs/generate_ppt.py --pdf
+
+# 也可自定义路径
+python docs/generate_ppt.py --pdf --out /tmp/SITP_结题汇报.pptx
+```
+
+> **无 LibreOffice 时**：在 Microsoft PowerPoint 或 WPS 演示中打开 `.pptx` 文件，  
+> 选择 **文件 → 导出 → 导出为 PDF** 即可一键转换。
 
 ---
 
